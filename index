@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IDV Assignment 5 – Combined Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #0f172a;
+      color: #e5e7eb;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden; /* ❗Hard rule：禁止横向滚动条 */
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+    .overview-card {
+      background: #1e293b;
+      border: 1px solid rgba(148,163,184,0.35);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 28px;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.45);
+      line-height: 1.6;
+    }
+    .overview-card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+      color: #f8fafc;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .overview-card p {
+      font-size: 0.86rem;
+      color: #cbd5e1;
+      margin-bottom: 10px;
+    }
+    .nav {
+      display:flex;
+      flex-wrap: wrap;
+      gap:10px;
+      justify-content:center;
+      margin-bottom:30px;
+    }
+    .nav button {
+      padding: 8px 16px;
+      border:none;
+      border-radius:6px;
+      background:#1e293b;
+      color:#cbd5e1;
+      cursor:pointer;
+      font-weight: 600;
+      font-size: 0.82rem;
+      transition: all 0.22s ease;
+    }
+    .nav button:hover {
+      transform: translateY(-2px);
+      background: #334155;
+      color:#fff;
+    }
+    .nav button.active {
+      background:#4f46e5;
+      color:#fff;
+      transform: translateY(-1px);
+      box-shadow: 0 0 12px rgba(79,70,229,0.5);
+    }
+    .frame-wrapper {
+      width:100%;
+      height:800px;
+      border:none;
+      border-radius:8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      background:#000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- 📌 4. 页面顶部 overview（已按要求加入） -->
+    <section class="overview-card">
+      <h2>Overview</h2>
+      <p>
+        What this page contains: This is a container page integrating four assignments (A1–A4), each loaded via separate links. Each assignment features its own layout alongside visualisations or interactive elements.
+        The unified interface serves merely as an outer framework, with iframes preserving each assignment's native functionality internally.
+      </p>
+      <p>
+        Challenges encountered during merging: Different modules employed distinct HTML, CSS, and JS structures. Directly stacking these would cause conflicts, particularly with interactive charts where layouts would frequently break down,
+        even triggering horizontal scrollbars.
+      </p>
+      <p>
+        My solution: Load each assignment in an isolated iframe, keeping all styles and scripts separate. Set overflow-x to hidden on the outer layer to prevent horizontal scrollbars.
+        This ensures both secure integration and a clean, visually appealing interface.
+        The most challenging assignments to integrate are typically A3 or A4, as they often involve greater interactivity and chart requirements.
+      </p>
+    </section>
+
+    <h1>IDV Assignment 5 · Integrated View</h1>
+
+    <div class="nav">
+      <!-- 作业导航按钮 -->
+      <button class="nav-btn active" data-src="https://zzz747214260-sudo.github.io/IDV-assignment1/">A1</button>
+      <button class="nav-btn" data-src="https://zzz747214260-sudo.github.io/IDV-assignment2/">A2</button>
+      <button class="nav-btn" data-src="https://zzz747214260-sudo.github.io/IDV-assignment3/">A3</button>
+      <button class="nav-btn" data-src="https://zzz747214260-sudo.github.io/IDV-assignment4/">A4</button>
+    </div>
+
+    <!-- 预览区 iframe -->
+    <iframe
+      id="assign-frame"
+      class="frame-wrapper"
+      src="https://zzz747214260-sudo.github.io/homework/"
+      title="Assignment frame"
+    ></iframe>
+
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.nav-btn');
+    const frame = document.getElementById('assign-frame');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const url = btn.getAttribute('data-src');
+        frame.src = url;
+      });
+    });
+  </script>
+</body>
+</html>
